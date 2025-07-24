@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-<title>Modelo - Piso 1</title>
+  <title>Piso 1 - Tour Virtual</title>
 </head>
 <body>
 
-<h2>🔊 Recorrido con audios por anotación</h2>
+<h2>Piso 1</h2>
+
 <audio id="audio" controls></audio>
 
 <div id="api-frame-wrapper" style="width: 800px; height: 600px;">
@@ -26,7 +27,6 @@
   const client = new Sketchfab(iframe);
   const audio = document.getElementById('audio');
 
-  // Mapeo: anotación -> archivo de audio
   const audiosPorAnotacion = {
     0: "audio/OnceUponaTime.mp3",
     1: "audio/Sans.mp3",
@@ -41,10 +41,7 @@
       api.addEventListener('viewerready', function() {
         console.log("Modelo cargado correctamente");
 
-        // Escuchar cambio de anotación
         api.addEventListener('annotationFocus', function(index) {
-          console.log("Anotación activada:", index);
-
           const ruta = audiosPorAnotacion[index];
           if (ruta) {
             audio.src = ruta;
