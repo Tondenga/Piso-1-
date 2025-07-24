@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Sketchfab + Audio por Anotación</title>
+  <title>Sketchfab con audio sincronizado por anotación</title>
 </head>
 <body>
 
-<h2>🔊 Reproducción de audio por anotación</h2>
+<h2>🔊 Recorrido con audios por anotación</h2>
 <audio id="audio" controls></audio>
 
 <div id="api-frame-wrapper" style="width: 800px; height: 600px;">
@@ -15,51 +15,52 @@
     width="100%"
     height="100%"
     allow="autoplay; fullscreen; xr-spatial-tracking"
-    src="    src="https://sketchfab.com/models/65a139a964894075b67e3c9a3886d85b/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0""
+    src="https://sketchfab.com/models/65a139a964894075b67e3c9a3886d85b/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
     frameborder="0">
   </iframe>
 </div>
+
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <script>
   const iframe = document.getElementById('api-frame');
   const client = new Sketchfab(iframe);
   const audio = document.getElementById('audio');
 
-  // Asocia cada anotación con un MP3
-  const audioMap = {
+  // Mapeo: anotación -> archivo de audio
+  const audiosPorAnotacion = {
     0: "audio/OnceUponaTime.mp3",
     1: "audio/Sans.mp3",
     2: "audio/Heartache.mp3",
     3: "audio/MEGALOVANIA.mp3"
   };
 
-  client.init('65a139a964894075b67e3c9a3886d85b', { // Reemplaza con tu UID
+  client.init('65a139a964894075b67e3c9a3886d85b', {
     success: function(api) {
       api.start();
-      api.addEventListener('viewerready', function() {
-        console.log('Sketchfab listo');
 
+      api.addEventListener('viewerready', function() {
+        console.log("Modelo cargado correctamente");
+
+        // Escuchar cambio de anotación
         api.addEventListener('annotationFocus', function(index) {
-          console.log("Anotación seleccionada: ", index);
-          if (audioMap[index]) {
-            audio.src = audioMap[index];
+          console.log("Anotación activada:", index);
+
+          const ruta = audiosPorAnotacion[index];
+          if (ruta) {
+            audio.src = ruta;
             audio.play();
           } else {
             audio.pause();
-            audio.src = "";
+            audio.removeAttribute('src');
           }
         });
       });
     },
     error: function() {
-      console.log('Error al cargar Sketchfab');
+      console.error("No se pudo cargar el visor de Sketchfab");
     }
   });
 </script>
 
 </body>
 </html>
-
-</body>
-</html>
-
