@@ -2,24 +2,20 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Visor 3D sincronizado con audio</title>
+  <title>Sketchfab + Audio por Anotación</title>
 </head>
 <body>
 
-<h2>🎧 Reproducción sincronizada con Sketchfab</h2>
+<h2>🔊 Reproducción de audio por anotación</h2>
+<audio id="audio" controls></audio>
 
-<audio id="audio" controls autoplay>
-  <source src="OnceUponaTime.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio.
-</audio>
-
-<div id="api-frame-wrapper" style="width: 800px; height: 600px; margin-top: 20px;">
+<div id="api-frame-wrapper" style="width: 800px; height: 600px;">
   <iframe
     id="api-frame"
     width="100%"
     height="100%"
     allow="autoplay; fullscreen; xr-spatial-tracking"
-    src="https://sketchfab.com/models/65a139a964894075b67e3c9a3886d85b/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
+    src="https://sketchfab.com/models/abcdef123456/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
     frameborder="0">
   </iframe>
 </div>
@@ -28,34 +24,30 @@
 <script>
   const iframe = document.getElementById('api-frame');
   const client = new Sketchfab(iframe);
+  const audio = document.getElementById('audio');
 
-  client.init('65a139a964894075b67e3c9a3886d85b', {
+  // Asocia cada anotación con un MP3
+  const audioMap = {
+    0: "audio/intro.mp3",
+    1: "audio/parte1.mp3",
+    2: "audio/parte2.mp3",
+    3: "audio/parte3.mp3"
+  };
+
+  client.init('abcdef123456', { // Reemplaza con tu UID
     success: function(api) {
       api.start();
       api.addEventListener('viewerready', function() {
         console.log('Sketchfab listo');
 
-        const audio = document.getElementById('audio');
-
-        // Evita que se repitan las llamadas en bucle
-        let triggered = [false, false, false];
-
-        audio.addEventListener('timeupdate', function() {
-          const t = audio.currentTime;
-
-          if (t >= 5 && !triggered[0]) {
-            api.gotoAnnotation(0);
-            triggered[0] = true;
-          }
-
-          if (t >= 10 && !triggered[1]) {
-            api.gotoAnnotation(1);
-            triggered[1] = true;
-          }
-
-          if (t >= 15 && !triggered[2]) {
-            api.gotoAnnotation(2);
-            triggered[2] = true;
+        api.addEventListener('annotationFocus', function(index) {
+          console.log("Anotación seleccionada: ", index);
+          if (audioMap[index]) {
+            audio.src = audioMap[index];
+            audio.play();
+          } else {
+            audio.pause();
+            audio.src = "";
           }
         });
       });
@@ -65,6 +57,9 @@
     }
   });
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
