@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piso 2 - Tour Virtual</title>
+  <title>Piso 1 - Tour Virtual</title>
   <style>
     * {
       margin: 0;
@@ -56,7 +56,7 @@
   <iframe
     id="api-frame"
     allow="autoplay; fullscreen; xr-spatial-tracking"
-    src="https://sketchfab.com/models/0505b5fd685a4532bbb8443306d2cadd/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
+    src="https://sketchfab.com/models/65a139a964894075b67e3c9a3886d85b/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
     frameborder="0"
     width="100%"
     height="100%">
@@ -66,6 +66,8 @@
 <audio id="audio" controls>
   Tu navegador no soporta audio HTML5.
 </audio>
+
+<button id="back-button" onclick="window.location.href='index.html'">← Volver al inicio</button>
 
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <script>
@@ -80,12 +82,12 @@
     3: "audio/MEGALOVANIA.mp3"
   };
 
-  client.init('0505b5fd685a4532bbb8443306d2cadd', {
+  client.init('65a139a964894075b67e3c9a3886d85b', {
     success: function(api) {
       api.start();
 
       api.addEventListener('viewerready', function() {
-        console.log("Modelo cargado correctamente (Piso 2)");
+        console.log("Modelo cargado correctamente (Piso 1)");
 
         api.addEventListener('annotationFocus', function(index) {
           console.log("Anotación activada:", index);
@@ -109,3 +111,4 @@
 
 </body>
 </html>
+
