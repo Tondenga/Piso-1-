@@ -1,24 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Tour Virtual - Piso 2</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piso 2 - Tour Virtual</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      background-color: #000;
+      font-family: sans-serif;
+    }
+    #api-frame-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+    #audio {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>🎧 Tour Virtual: Piso 2</h2>
-<audio id="audio" controls></audio>
-
-<div id="api-frame-wrapper" style="width: 800px; height: 600px;">
+<div id="api-frame-wrapper">
   <iframe
     id="api-frame"
-    width="100%"
-    height="100%"
     allow="autoplay; fullscreen; xr-spatial-tracking"
     src="https://sketchfab.com/models/0505b5fd685a4532bbb8443306d2cadd/embed?autostart=1&ui_infos=0&ui_controls=0&ui_stop=0"
-    frameborder="0">
+    frameborder="0"
+    width="100%"
+    height="100%">
   </iframe>
 </div>
+
+<audio id="audio" controls>
+  Tu navegador no soporta audio HTML5.
+</audio>
 
 <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 <script>
@@ -26,7 +57,6 @@
   const audio = document.getElementById('audio');
   const client = new Sketchfab(iframe);
 
-  // Mapear anotaciones del segundo piso a archivos de audio (ajusta los nombres si lo necesitas)
   const audiosPorAnotacion = {
     0: "audio/OnceUponaTime.mp3",
     1: "audio/Sans.mp3",
@@ -39,11 +69,10 @@
       api.start();
 
       api.addEventListener('viewerready', function() {
-        console.log("Modelo del segundo piso cargado correctamente");
+        console.log("Modelo cargado correctamente (Piso 2)");
 
-        // Escucha cambios de anotación
         api.addEventListener('annotationFocus', function(index) {
-          console.log("Anotación activa:", index);
+          console.log("Anotación activada:", index);
 
           const ruta = audiosPorAnotacion[index];
           if (ruta) {
@@ -57,7 +86,7 @@
       });
     },
     error: function() {
-      console.error("Error al cargar Sketchfab para piso 2");
+      console.error("No se pudo cargar el visor de Sketchfab");
     }
   });
 </script>
