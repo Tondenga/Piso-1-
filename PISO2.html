@@ -5,45 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Piso 2 - Tour Virtual</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      background-color: #000;
-      font-family: sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background-color: #000; }
     #api-frame-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh; z-index: 1;
     }
     #audio {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      z-index: 2;
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
-      border-radius: 10px;
+      position: absolute; bottom: 20px; left: 20px; z-index: 2;
+      background: rgba(0,0,0,0.7); padding: 10px; border-radius: 10px;
     }
     #back-button {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-      background-color: rgba(255, 255, 255, 0.8);
-      border: none;
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background-color 0.2s;
+      position: absolute; top: 20px; left: 20px; z-index: 10;
+      background-color: rgba(255, 255, 255, 0.8); border: none;
+      padding: 10px 16px; font-size: 14px; cursor: pointer; border-radius: 6px;
     }
     #back-button:hover {
       background-color: rgba(255, 255, 255, 1);
@@ -87,11 +62,7 @@
       api.start();
 
       api.addEventListener('viewerready', function() {
-        console.log("Modelo cargado correctamente (Piso 2)");
-
         api.addEventListener('annotationFocus', function(index) {
-          console.log("Anotación activada:", index);
-
           const ruta = audiosPorAnotacion[index];
           if (ruta) {
             audio.src = ruta;
@@ -104,7 +75,7 @@
       });
     },
     error: function() {
-      console.error("No se pudo cargar el visor de Sketchfab");
+      console.error("Error al cargar el modelo del Piso 2");
     }
   });
 </script>
